@@ -64,7 +64,6 @@ UNGBAN_ERRORS = {
 
 
 # <================================================ FUNCTION =======================================================>
-@phoenixXsupport
 async def gban(update: Update, context: ContextTypes.DEFAULT_TYPE):
     bot, args = context.bot, context.args
     message = update.effective_message
@@ -277,7 +276,6 @@ async def apply_gban(context, user_id, admin_user):
         pass  # bot probably blocked by user
 
 
-@phoenixXsupport
 async def ungban(update: Update, context: ContextTypes.DEFAULT_TYPE):
     bot, args = context.bot, context.args
     message = update.effective_message
