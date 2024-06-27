@@ -22,14 +22,14 @@ START_IMG = [
 HEY_IMG = "https://telegra.ph/file/c3616f6a49f181e9a210f.jpg"
 
 ALIVE_ANIMATION = [
-    "https://telegra.ph//file/f9e2b9cdd9324fc39970a.mp4",
-    "https://telegra.ph//file/8d4d7d06efebe2f8becd0.mp4",
-    "https://telegra.ph//file/c4c2759c5fc04cefd207a.mp4",
-    "https://telegra.ph//file/b1fa6609b1c4807255927.mp4",
-    "https://telegra.ph//file/f3c7147da6511fbe27c25.mp4",
-    "https://telegra.ph//file/39071b73c02e3ff5945ca.mp4",
-    "https://telegra.ph//file/8d4d7d06efebe2f8becd0.mp4",
-    "https://telegra.ph//file/6efdd8e28756bc2f6e53e.mp4",
+    "https://telegra.ph/file/bf67a97683bfa26244053.mp4",
+    "https://telegra.ph/file/ff7bd96efc1bab7f7ed1a.mp4",
+    "https://telegra.ph/file/e5fa0dc80f16adbb87fe6.mp4",
+    "https://telegra.ph/file/b0e9860b6fd6f636ee89b.mp4",
+    "https://telegra.ph/file/a6c1c4bb185430756ab48.mp4",
+    "https://telegra.ph/file/26f3749531e0712aba2fb.mp4",
+    "https://telegra.ph/file/0d81f282f19b652415bac.mp4",
+    "https://telegra.ph/file/3f98d29f7e50e589d60d1.mp4",
 ]
 
 FIRST_PART_TEXT = "✨ *ʜᴇʟʟᴏ* `{}` . . ."
