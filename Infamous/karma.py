@@ -39,33 +39,28 @@ PM_START_TEXT = "🫧 *ɪ ᴀᴍ ᴍs ʟɪcʜᴀ 🫧, ᴀ ᴛʜᴇᴍᴇᴅ ʙ�
 START_BTN = [
     [
         InlineKeyboardButton(
-            text="⇦ ADD ME ⇨",
+            text="⛩️ sᴜᴍᴍᴏɴ ᴍᴇ ⛩️",
             url=f"https://t.me/{BOT_USERNAME}?startgroup=true",
         ),
     ],
     [
-        InlineKeyboardButton(text="HELP", callback_data="help_back"),
+        InlineKeyboardButton(text="🌀 ʜᴇʟᴘ 🌀", callback_data="help_back"),
     ],
     [
-        InlineKeyboardButton(text="DETAILS", callback_data="Miko_"),
-        InlineKeyboardButton(text="AI", callback_data="ai_handler"),
-        InlineKeyboardButton(text="SOURCE", callback_data="git_source"),
-    ],
-    [
-        InlineKeyboardButton(text="CREATOR", url=f"tg://user?id={OWNER_ID}"),
+        InlineKeyboardButton(text="🏮 ᴅᴇᴛᴀɪʟs 🏮", callback_data="Miko_"),
+        InlineKeyboardButton(text="🌪 ᴀɪ 🌪", callback_data="ai_handler"),
     ],
 ]
 
 GROUP_START_BTN = [
     [
         InlineKeyboardButton(
-            text="⇦ ADD ME ⇨",
+            text="⛩️ sᴜᴍᴍᴏɴ ᴍᴇ ⛩️",
             url=f"https://t.me/{BOT_USERNAME}?startgroup=true",
         ),
     ],
     [
-        InlineKeyboardButton(text="SUPPORT", url=f"https://t.me/{SUPPORT_CHAT}"),
-        InlineKeyboardButton(text="CREATOR", url=f"tg://user?id={OWNER_ID}"),
+        InlineKeyboardButton(text="🌪 sᴜᴩᴩᴏʀᴛ 🌪", url=f"https://t.me/{SUPPORT_CHAT}"),
     ],
 ]
 
