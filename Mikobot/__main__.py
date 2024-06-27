@@ -495,10 +495,16 @@ async def Miko_about_callback(update: Update, context: ContextTypes.DEFAULT_TYPE
                         InlineKeyboardButton(
                             text="Ꭾʜᴏᴇɴɪx ◦ sᴜᴘᴘᴏʀᴛ", url=f"https://t.me/{SUPPORT_CHAT}"
                         ),
-                        InlineKeyboardButton(
+                    ],
+                    [
+
+InlineKeyboardButton(
                             text="Ꭾʜᴏᴇɴɪx ˹ɢʙᴀɴ ʟᴏɢs˼", url=f"https://t.me/PhoenixGban"
                         ),
-                        InlineKeyboardButton(
+                    ],
+                    [
+ 
+InlineKeyboardButton(
                             text="Ꭾʜᴏᴇɴɪx ◦ ғʙᴀɴ ʟᴏɢs", url=f"https://t.me/PhoenixFbanLogs"
                         ),
                     ],
