@@ -66,19 +66,19 @@ GROUP_START_BTN = [
 
 ALIVE_BTN = [
     [
-        ib(text="UPDATES", url="https://t.me/Hydra_Updates"),
-        ib(text="SUPPORT", url="https://t.me/hydraXsupport"),
+        ib(text="🍥 ᴜᴘᴅᴀᴛᴇs 🍥", url="https://t.me/EMXES_NETWORK"),
+        ib(text="🌐 ɢʙᴀɴ ʟᴏɢs 🌐", url="https://t.me/PhoenixGban"),
     ],
     [
         ib(
-            text="⇦ ADD ME ⇨",
+            text="⛩️ sᴜᴍᴍᴏɴ ᴍᴇ ⛩️",
             url=f"https://t.me/{BOT_USERNAME}?startgroup=true",
         ),
     ],
 ]
 
 HELP_STRINGS = """
-🫧 *Yae-Miko* 🫧
+🫧 *ᴍs-ʟɪcʜᴀ* 🫧
 
 ☉ *Here, you will find a list of all the available commands.*
 
