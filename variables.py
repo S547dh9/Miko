@@ -28,7 +28,7 @@ class Config(object):
     SUPPORT_ID = -1001629811868
 
     # Database name
-    DB_NAME = "MikoDB"
+    DB_NAME = "mikodb"
 
     # Bot token
     TOKEN = "2323839365:AAFgfdadqawlfdsM7slOa33eM_ghop"  # Get bot token from @BotFather on Telegram
