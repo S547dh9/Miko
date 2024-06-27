@@ -36,7 +36,7 @@ FIRST_PART_TEXT = "🪷 *ʜᴇʏ* `{}` . . ."
 
 PM_START_TEXT = "🫧 *ɪ ᴀᴍ ᴍɪᴋᴏ 🫧, ⏣ Here, you will find a list of all the available commands.
 
-ᴀʟʟ ᴄᴏᴍᴍᴀɴᴅs ᴄᴀɴ ʙᴇ ᴜsᴇᴅ ᴡɪᴛʜ : /.*"
+ᴀʟʟ ᴄᴏᴍᴍᴀɴᴅs ᴄᴀɴ ʙᴇ ᴜsᴇᴅ ᴡɪᴛʜ : / .*"
 
 START_BTN = [
     [
