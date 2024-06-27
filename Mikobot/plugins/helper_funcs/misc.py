@@ -211,9 +211,9 @@ def is_module_loaded(name):
 def convert_gif(input):
     """Function to convert mp4 to webm(vp9)"""
 
-    vid = cv.VideoCapture(input)
-    height = vid.get(cv.CAP_PROP_FRAME_HEIGHT)
-    width = vid.get(cv.CAP_PROP_FRAME_WIDTH)
+    vid = cv2.VideoCapture(input)
+    height = vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
+    width = vid.get(cv2.CAP_PROP_FRAME_WIDTH)
 
     # check height and width to scale
     if width > height:
