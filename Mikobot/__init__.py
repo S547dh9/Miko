@@ -184,7 +184,6 @@ function = dispatcher.add_handler
 ALIVE_MSG = """
 🥂 *𝚄𝙵𝙵 𝙽𝙾𝚆 𝙸 𝙰𝙼 𝙱𝚁𝙴𝙰𝚃𝙷𝙸𝙽𝙶 𝚂𝚆𝙴𝙴𝚃𝚈!*
 
-
 *𝙷𝙾𝙿𝙴 𝙸 𝚆𝙸𝙻𝙻 𝚁𝙴𝙼𝙰𝙸𝙽 𝙰𝙻𝙸𝚅𝙴!*
 """
 
