@@ -467,7 +467,7 @@ async def Miko_about_callback(update: Update, context: ContextTypes.DEFAULT_TYPE
                 [
                     [
                         InlineKeyboardButton(
-                            text="🎸 Ꭾʜᴏᴇɴɪx 🎸", callback_data="Miko_support"
+                            text="㊛ Ꭾʜᴏᴇɴɪx ㊛", callback_data="Miko_support"
                         ),
                         InlineKeyboardButton(text="🍥 ᴄᴏᴍᴍᴀɴᴅs 🍥", callback_data="help_back"),
                     ],
@@ -493,19 +493,19 @@ async def Miko_about_callback(update: Update, context: ContextTypes.DEFAULT_TYPE
                 [
                     [
                         InlineKeyboardButton(
-                            text="Ꭾʜᴏᴇɴɪx ◦ sᴜᴘᴘᴏʀᴛ", url=f"https://t.me/{SUPPORT_CHAT}"
+                            text="㊛ Ꭾʜᴏᴇɴɪx ◦ sᴜᴘᴘᴏʀᴛ", url=f"https://t.me/{SUPPORT_CHAT}"
                         ),
                     ],
                     [
 
 InlineKeyboardButton(
-                            text="Ꭾʜᴏᴇɴɪx ˹ɢʙᴀɴ ʟᴏɢs˼", url=f"https://t.me/PhoenixGban"
+                            text="㊛ Ꭾʜᴏᴇɴɪx ˹ɢʙᴀɴ ʟᴏɢs˼", url=f"https://t.me/PhoenixGban"
                         ),
                     ],
                     [
  
 InlineKeyboardButton(
-                            text="Ꭾʜᴏᴇɴɪx ◦ ғʙᴀɴ ʟᴏɢs", url=f"https://t.me/PhoenixFbanLogs"
+                            text="㊛ Ꭾʜᴏᴇɴɪx ◦ ғʙᴀɴ ʟᴏɢs", url=f"https://t.me/PhoenixFbanLogs"
                         ),
                     ],
                     [
