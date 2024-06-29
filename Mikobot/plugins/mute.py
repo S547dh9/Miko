@@ -45,7 +45,7 @@ async def check_user(user_id: int, bot: Bot, chat: Chat) -> Union[str, None]:
 
 @connection_status
 @check_admin
-@user_admin
+@is_user_admin
 @loggable
 def mute(update: Update, context: CallbackContext) -> str:
     bot = context.bot
@@ -90,7 +90,7 @@ def mute(update: Update, context: CallbackContext) -> str:
     return ""
 @connection_status
 @check_admin
-@user_admin
+@is_user_admin
 @loggable
 def dmute(update: Update, context: CallbackContext) -> str:
     bot = context.bot
@@ -133,7 +133,7 @@ def dmute(update: Update, context: CallbackContext) -> str:
 
 @connection_status
 @check_admin
-@user_admin
+@is_user_admin
 @loggable
 def unmute(update: Update, context: CallbackContext) -> str:
     bot, args = context.bot, context.args
@@ -196,7 +196,7 @@ def unmute(update: Update, context: CallbackContext) -> str:
 @connection_status
 @check_admin
 @can_restrict
-@user_admin
+@is_user_admin
 @loggable
 def temp_mute(update: Update, context: CallbackContext) -> str:
     bot, args = context.bot, context.args
