@@ -54,14 +54,14 @@ async def mute(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
     user = update.effective_user
     message = update.effective_message
 
-    user_id, reason = extract_user_and_text(message, args)
+    user_id, reason = await extract_user_and_text(message,context,args)
     reply = check_user(user_id, bot, chat)
 
     if reply:
         message.reply_text(reply)
         return ""
 
-    member = chat.get_member(user_id)
+    member = await chat.get_member(user_id)
 
     log = (
         f"<b>{html.escape(chat.title)}:</b>\n"
@@ -73,20 +73,28 @@ async def mute(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
     if reason:
         log += f"\n<b>Reason:</b> {reason}"
 
-    if member.can_send_messages is None or member.can_send_messages:
+    if reason:
+        log += f"\n<b>Reason:</b> {reason}"
+
+    if member.status in [ChatMember.RESTRICTED, ChatMember.MEMBER]:
         chat_permissions = ChatPermissions(can_send_messages=False)
-        bot.restrict_chat_member(chat.id, user_id, chat_permissions)
-        bot.sendMessage(
+        await bot.restrict_chat_member(chat.id, user_id, chat_permissions)
+        await bot.sendMessage(
             chat.id,
             f"Muted <b>{html.escape(member.user.first_name)}</b> with no expiration date!",
             parse_mode=ParseMode.HTML,
+            message_thread_id=message.message_thread_id if chat.is_forum else None,
         )
         return log
 
     else:
-        message.reply_text("This user is already muted!")
+        await message.reply_text("This user is already muted!")
 
     return ""
+
+    
+
+
 @connection_status
 @loggable
 @check_admin(permission="can_restrict_members", is_both=True)
