@@ -192,9 +192,8 @@ async def unmute(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
 
 @connection_status
 @loggable
-@can_restrict
-@check_admin
-def temp_mute(update: Update, context: CallbackContext) -> str:
+@check_admin(permission="can_restrict_members", is_both=True)
+async def temp_mute(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
     bot, args = context.bot, context.args
     chat = update.effective_chat
     user = update.effective_user
