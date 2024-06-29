@@ -105,7 +105,7 @@ async def unmute(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
     user = update.effective_user
     message = update.effective_message
 
-    user_id = await extract_user(message, context, args)
+    user_id,reason = await extract_user_and_text(message, context, args)
     if not user_id:
         await message.reply_text(
             "You'll need to either give me a username to unmute, or reply to someone to be unmuted.",
