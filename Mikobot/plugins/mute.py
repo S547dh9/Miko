@@ -97,26 +97,30 @@ async def mute(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
 @connection_status
 @loggable
 @check_admin(permission="can_restrict_members", is_both=True)
-async def unmute(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
-    bot = context.bot
-    args = context.args
-
+async def unmute(update: Update, context: ContextTypes.DEFAULT_TYPE)
+-> str:
+    bot, args = context.bot, context.args
     chat = update.effective_chat
     user = update.effective_user
     message = update.effective_message
 
-    user_id,reason = await extract_user_and_text(message, context, args)
+    user_id = extract_user(message, args)
     if not user_id:
-        await message.reply_text(
-            "You'll need to either give me a username to unmute, or reply to someone to be unmuted.",
+        message.reply_text(
+            "You'll need to either give me a username to unmute, or reply to someone to be unmuted."
         )
         return ""
 
-    member = await chat.get_member(int(user_id))
+    member = chat.get_member(int(user_id))
 
-    if member.status not in [ChatMember.LEFT, ChatMember.BANNED]:
-        if member.status != ChatMember.RESTRICTED:
-            await message.reply_text("This user already has the right to speak.")
+    if member.status != "kicked" and member.status != "left":
+        if (
+            member.can_send_messages
+            and member.can_send_media_messages
+            and member.can_send_other_messages
+            and member.can_add_web_page_previews
+        ):
+            message.reply_text("This user already has the right to speak.")
         else:
             chat_permissions = ChatPermissions(
                 can_send_messages=True,
@@ -129,14 +133,13 @@ async def unmute(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
                 can_add_web_page_previews=True,
             )
             try:
-                await bot.restrict_chat_member(chat.id, int(user_id), chat_permissions)
+                bot.restrict_chat_member(chat.id, int(user_id), chat_permissions)
             except BadRequest:
                 pass
-            await bot.sendMessage(
+            bot.sendMessage(
                 chat.id,
                 f"I shall allow <b>{html.escape(member.user.first_name)}</b> to text!",
                 parse_mode=ParseMode.HTML,
-                message_thread_id=message.message_thread_id if chat.is_forum else None,
             )
             return (
                 f"<b>{html.escape(chat.title)}:</b>\n"
@@ -145,9 +148,9 @@ async def unmute(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
                 f"<b>User:</b> {mention_html(member.user.id, member.user.first_name)}"
             )
     else:
-        await message.reply_text(
+        message.reply_text(
             "This user isn't even in the chat, unmuting them won't make them talk more than they "
-            "already do!",
+            "already do!"
         )
 
     return ""
