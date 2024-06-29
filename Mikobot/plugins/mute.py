@@ -1,3 +1,4 @@
+# <============================================== IMPORTS =========================================================>
 import html
 from typing import Union
 
@@ -17,7 +18,10 @@ from Mikobot.plugins.helper_funcs.extraction import extract_user, extract_user_a
 from Mikobot.plugins.helper_funcs.string_handling import extract_time
 from Mikobot.plugins.log_channel import loggable
 
+# <=======================================================================================================>
 
+
+# <================================================ FUNCTION =======================================================>
 async def check_user(user_id: int, bot: Bot, chat: Chat) -> Union[str, None]:
     if not user_id:
         reply = "You don't seem to be referring to a user or the ID specified is incorrect.."
@@ -54,11 +58,11 @@ async def mute(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
     user = update.effective_user
     message = update.effective_message
 
-    user_id, reason = await extract_user_and_text(message,context,args)
-    reply = check_user(user_id, bot, chat)
+    user_id, reason = await extract_user_and_text(message, context, args)
+    reply = await check_user(user_id, bot, chat)
 
     if reply:
-        message.reply_text(reply)
+        await message.reply_text(reply)
         return ""
 
     member = await chat.get_member(user_id)
@@ -69,9 +73,6 @@ async def mute(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
         f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
         f"<b>User:</b> {mention_html(member.user.id, member.user.first_name)}"
     )
-
-    if reason:
-        log += f"\n<b>Reason:</b> {reason}"
 
     if reason:
         log += f"\n<b>Reason:</b> {reason}"
@@ -90,50 +91,6 @@ async def mute(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
     else:
         await message.reply_text("This user is already muted!")
 
-    return ""
-
-    
-
-
-@connection_status
-@loggable
-@check_admin(permission="can_restrict_members", is_both=True)
-async def dmute(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
-    bot = context.bot
-    args = context.args
-
-    chat = update.effective_chat
-    user = update.effective_user
-    message = update.effective_message
-
-    user_id, reason = extract_user_and_text(message, args)
-    bot.delete_message(chat, message.id)
-    reply = check_user(user_id, bot, chat)
-
-    if reply:
-        message.reply_text(reply)
-        return ""
-
-    member = chat.get_member(user_id)
-
-    log = (
-        f"<b>{html.escape(chat.title)}:</b>\n"
-        f"#MUTE\n"
-        f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
-        f"<b>User:</b> {mention_html(member.user.id, member.user.first_name)}"
-    )
-
-    if reason:
-        log += f"\n<b>Reason:</b> {reason}"
-
-    if member.can_send_messages is None or member.can_send_messages:
-        chat_permissions = ChatPermissions(can_send_messages=False)
-        bot.restrict_chat_member(chat.id, user_id, chat_permissions)
-
-        return log
-
-    else:
-        pass
     return ""
 
 
@@ -207,17 +164,17 @@ async def temp_mute(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
     user = update.effective_user
     message = update.effective_message
 
-    user_id, reason = extract_user_and_text(message, args)
-    reply = check_user(user_id, bot, chat)
+    user_id, reason = await extract_user_and_text(message, context, args)
+    reply = await check_user(user_id, bot, chat)
 
     if reply:
-        message.reply_text(reply)
+        await message.reply_text(reply)
         return ""
 
-    member = chat.get_member(user_id)
+    member = await chat.get_member(user_id)
 
     if not reason:
-        message.reply_text("You haven't specified a time to mute this user for!")
+        await message.reply_text("You haven't specified a time to mute this user for!")
         return ""
 
     split_reason = reason.split(None, 1)
@@ -228,7 +185,7 @@ async def temp_mute(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
     else:
         reason = ""
 
-    mutetime = extract_time(message, time_val)
+    mutetime = await extract_time(message, time_val)
 
     if not mutetime:
         return ""
@@ -244,24 +201,28 @@ async def temp_mute(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
         log += f"\n<b>Reason:</b> {reason}"
 
     try:
-        if member.can_send_messages is None or member.can_send_messages:
+        if member.status in [ChatMember.RESTRICTED, ChatMember.MEMBER]:
             chat_permissions = ChatPermissions(can_send_messages=False)
-            bot.restrict_chat_member(
-                chat.id, user_id, chat_permissions, until_date=mutetime
+            await bot.restrict_chat_member(
+                chat.id,
+                user_id,
+                chat_permissions,
+                until_date=mutetime,
             )
-            bot.sendMessage(
+            await bot.sendMessage(
                 chat.id,
                 f"Muted <b>{html.escape(member.user.first_name)}</b> for {time_val}!",
                 parse_mode=ParseMode.HTML,
+                message_thread_id=message.message_thread_id if chat.is_forum else None,
             )
             return log
         else:
-            message.reply_text("This user is already muted.")
+            await message.reply_text("This user is already muted.")
 
     except BadRequest as excp:
         if excp.message == "Reply message not found":
             # Do not reply
-            message.reply_text(f"Muted for {time_val}!", quote=False)
+            await message.reply_text(f"Muted for {time_val}!", quote=False)
             return log
         else:
             LOGGER.warning(update)
@@ -272,27 +233,33 @@ async def temp_mute(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
                 chat.id,
                 excp.message,
             )
-            message.reply_text("Well damn, I can't mute that user.")
+            await message.reply_text("Well damn, I can't mute that user.")
 
     return ""
 
 
+# <=================================================== HELP ====================================================>
+
+
 __help__ = """
-*ᴀᴅᴍɪɴs ᴏɴʟʏ:*
- ❍ /mute  <ᴜsᴇʀʜᴀɴᴅʟᴇ>*:* sɪʟᴇɴᴄᴇs ᴀ ᴜsᴇʀ. ᴄᴀɴ ᴀʟsᴏ ʙᴇ ᴜsᴇᴅ ᴀs ᴀ ʀᴇᴘʟʏ, ᴍᴜᴛɪɴɢ ᴛʜᴇ ʀᴇᴘʟɪᴇᴅ ᴛᴏ ᴜsᴇʀ.
- ❍ /tmute  <ᴜsᴇʀʜᴀɴᴅʟᴇ> x(ᴍ/ʜ/ᴅ)*:* ᴍᴜᴛᴇs ᴀ ᴜsᴇʀ ғᴏʀ x ᴛɪᴍᴇ. (ᴠɪᴀ ʜᴀɴᴅʟᴇ, ᴏʀ ʀᴇᴘʟʏ). `ᴍ` = `ᴍɪɴᴜᴛᴇs`, `ʜ` = `ʜᴏᴜʀs`, `ᴅ` = `ᴅᴀʏs`.
- ❍ /unmute <ᴜsᴇʀʜᴀɴᴅʟᴇ>*:* ᴜɴᴍᴜᴛᴇs ᴀ ᴜsᴇʀ. ᴄᴀɴ ᴀʟsᴏ ʙᴇ ᴜsᴇᴅ ᴀs ᴀ ʀᴇᴘʟʏ, ᴍᴜᴛɪɴɢ ᴛʜᴇ ʀᴇᴘʟɪᴇᴅ ᴛᴏ ᴜsᴇʀ.
- ❍ /dmute <ᴜsᴇʀʜᴀɴᴅʟᴇ>*:* sɪʟᴇɴᴄᴇs ᴀ ᴜsᴇʀ. ᴄᴀɴ ᴀʟsᴏ ʙᴇ ᴜsᴇᴅ ᴀs ᴀ ʀᴇᴘʟʏ, ᴍᴜᴛɪɴɢ ᴛʜᴇ ʀᴇᴘʟɪᴇᴅ ᴛᴏ ᴜsᴇʀ.
+➠ *Admins only:*
+
+» /mute <userhandle>: silences a user. Can also be used as a reply, muting the replied to user.
+
+» /tmute <userhandle> x(m/h/d): mutes a user for x time. (via handle, or reply). `m` = `minutes`, `h` = `hours`, `d` = `days`.
+
+» /unmute <userhandle>: unmutes a user. Can also be used as a reply, muting the replied to user.
 """
-DMUTE_HANDLER = CommandHandler("dmute", dmute, block=False)
+
+# <================================================ HANDLER =======================================================>
 MUTE_HANDLER = CommandHandler("mute", mute, block=False)
 UNMUTE_HANDLER = CommandHandler("unmute", unmute, block=False)
 TEMPMUTE_HANDLER = CommandHandler(["tmute", "tempmute"], temp_mute, block=False)
 
-function(DMUTE_HANDLER)
 function(MUTE_HANDLER)
 function(UNMUTE_HANDLER)
 function(TEMPMUTE_HANDLER)
 
-__mod_name__ = "Mᴜᴛᴇ"
-__handlers__ = [DMUTE_HANDLER,MUTE_HANDLER, UNMUTE_HANDLER, TEMPMUTE_HANDLER]
+__mod_name__ = "MUTE"
+__handlers__ = [MUTE_HANDLER, UNMUTE_HANDLER, TEMPMUTE_HANDLER]
+# <================================================ END =======================================================>
