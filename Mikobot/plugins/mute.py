@@ -1,7 +1,7 @@
 import html
 from typing import Optional
 
-from telegram import Bot, Chat, ChatPermissions, ParseMode, Update
+from telegram import Bot, Chat, ChatPermissions, ChatMember, Update
 from telegram.error import BadRequest
 from telegram.ext import CallbackContext, CommandHandler
 from telegram.utils.helpers import mention_html
