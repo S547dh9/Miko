@@ -45,7 +45,7 @@ async def check_user(user_id: int, bot: Bot, chat: Chat) -> Union[str, None]:
 
 @connection_status
 @loggable
-@is_user_admin(chat, user.id)
+@is_user_admin(Chat, user.id)
 @check_admin(permission="can_restrict_members", is_both=True)
 async def mute(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
     bot = context.bot
