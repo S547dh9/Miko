@@ -276,14 +276,15 @@ __help__ = """
  ❍ /unmute <ᴜsᴇʀʜᴀɴᴅʟᴇ>*:* ᴜɴᴍᴜᴛᴇs ᴀ ᴜsᴇʀ. ᴄᴀɴ ᴀʟsᴏ ʙᴇ ᴜsᴇᴅ ᴀs ᴀ ʀᴇᴘʟʏ, ᴍᴜᴛɪɴɢ ᴛʜᴇ ʀᴇᴘʟɪᴇᴅ ᴛᴏ ᴜsᴇʀ.
  ❍ /dmute <ᴜsᴇʀʜᴀɴᴅʟᴇ>*:* sɪʟᴇɴᴄᴇs ᴀ ᴜsᴇʀ. ᴄᴀɴ ᴀʟsᴏ ʙᴇ ᴜsᴇᴅ ᴀs ᴀ ʀᴇᴘʟʏ, ᴍᴜᴛɪɴɢ ᴛʜᴇ ʀᴇᴘʟɪᴇᴅ ᴛᴏ ᴜsᴇʀ.
 """
-DMUTE_HANDLER = CommandHandler("dmute", dmute, run_async=True)
-MUTE_HANDLER = CommandHandler("mute", mute, run_async=True)
-UNMUTE_HANDLER = CommandHandler("unmute", unmute, run_async=True)
-TEMPMUTE_HANDLER = CommandHandler(["tmute", "tempmute"], temp_mute, run_async=True)
-dispatcher.add_handler(DMUTE_HANDLER)
-dispatcher.add_handler(MUTE_HANDLER)
-dispatcher.add_handler(UNMUTE_HANDLER)
-dispatcher.add_handler(TEMPMUTE_HANDLER)
+DMUTE_HANDLER = CommandHandler("dmute", dmute, block=False)
+MUTE_HANDLER = CommandHandler("mute", mute, block=False)
+UNMUTE_HANDLER = CommandHandler("unmute", unmute, block=False)
+TEMPMUTE_HANDLER = CommandHandler(["tmute", "tempmute"], temp_mute, block=False)
+
+function(DMUTE_HANDLER)
+function(MUTE_HANDLER)
+function(UNMUTE_HANDLER)
+function(TEMPMUTE_HANDLER)
 
 __mod_name__ = "Mᴜᴛᴇ"
 __handlers__ = [DMUTE_HANDLER,MUTE_HANDLER, UNMUTE_HANDLER, TEMPMUTE_HANDLER]
