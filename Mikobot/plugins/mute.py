@@ -89,8 +89,8 @@ async def mute(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
     return ""
 @connection_status
 @loggable
-@check_admin
-def dmute(update: Update, context: CallbackContext) -> str:
+@check_admin(permission="can_restrict_members", is_both=True)
+async def mute(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
     bot = context.bot
     args = context.args
 
