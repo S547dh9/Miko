@@ -98,7 +98,9 @@ async def mute(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
 @loggable
 @check_admin(permission="can_restrict_members", is_both=True)
 async def unmute(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
-    bot, args = context.bot, context.args
+    bot = context.bot
+    args = context.args
+
     chat = update.effective_chat
     user = update.effective_user
     message = update.effective_message
