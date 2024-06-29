@@ -1,34 +1,30 @@
 import html
-from typing import Optional
+from typing import Union
 
-from telegram import Bot, Chat, ChatPermissions, ChatMember, Update
+from telegram import Bot, Chat, ChatMember, ChatPermissions, Update
+from telegram.constants import ParseMode
 from telegram.error import BadRequest
-from telegram.ext import CallbackContext, CommandHandler
+from telegram.ext import CommandHandler, ContextTypes
 from telegram.helpers import mention_html
 
-from Mikobot import LOGGER, TIGERS, dispatcher
-from Mikobot.modules.helper_funcs.chat_status import (
-    bot_admin,
-    can_restrict,
+from Mikobot import LOGGER, function
+from Mikobot.plugins.helper_funcs.chat_status import (
+    check_admin,
     connection_status,
     is_user_admin,
-    user_admin,
 )
-from Mikobot.modules.helper_funcs.extraction import (
-    extract_user,
-    extract_user_and_text,
-)
-from Mikobot.modules.helper_funcs.string_handling import extract_time
-from Mikobot.modules.log_channel import loggable
+from Mikobot.plugins.helper_funcs.extraction import extract_user, extract_user_and_text
+from Mikobot.plugins.helper_funcs.string_handling import extract_time
+from Mikobot.plugins.log_channel import loggable
 
 
-def check_user(user_id: int, bot: Bot, chat: Chat) -> Optional[str]:
+async def check_user(user_id: int, bot: Bot, chat: Chat) -> Union[str, None]:
     if not user_id:
         reply = "You don't seem to be referring to a user or the ID specified is incorrect.."
         return reply
 
     try:
-        member = chat.get_member(user_id)
+        member = await chat.get_member(user_id)
     except BadRequest as excp:
         if excp.message == "User not found":
             reply = "I can't seem to find this user"
@@ -40,8 +36,8 @@ def check_user(user_id: int, bot: Bot, chat: Chat) -> Optional[str]:
         reply = "I'm not gonna MUTE myself, How high are you?"
         return reply
 
-    if is_user_admin(chat, user_id, member) or user_id in TIGERS:
-        reply = "Can't. Find someone else to mute but not this one."
+    if await is_user_admin(chat, user_id, member):
+        reply = "Sorry can't do that, this user is admin here."
         return reply
 
     return None
